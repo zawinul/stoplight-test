@@ -2,13 +2,222 @@ openapi: 3.0.0
 info:
   title: ms-config-registry
   version: '1.0'
-  contact:
-    name: paolo
-    email: paolo.andrenacci@gmail.com
-  description: Registro di configurazione per ecosistema di microservizi ad alta resilienza
+  description: Registry per ecosistema microservizi
 servers:
   - url: 'http://localhost:3000'
-    description: localhost
-paths: {}
+    description: locale
+paths:
+  '/service/config/{serviceName}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceConfig'
+      operationId: get-config
+    parameters:
+      - schema:
+          type: string
+        name: serviceName
+        in: path
+        required: true
+    put:
+      summary: ''
+      operationId: put-service-config-serviceName
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceConfig'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceConfig'
+        description: ''
+  '/service/info/{serviceName}':
+    parameters:
+      - schema:
+          type: string
+        name: serviceName
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+      operationId: get-service-info-serviceName
+    put:
+      summary: ''
+      operationId: put-service-info-serviceName
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceInfo'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          text/html:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+  '/app/config/{appName}':
+    parameters:
+      - schema:
+          type: string
+        name: appName
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppConfig'
+      operationId: get-app-config-appName
+    put:
+      summary: ''
+      operationId: put-app-config-appName
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppConfig'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppConfig'
+  /service/endpoint:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-service-endpoint
+    post:
+      summary: ''
+      operationId: post-service-endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '201':
+          description: Created
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceEndpoint'
+  '/service/endpoint/{serviceName}':
+    parameters:
+      - schema:
+          type: string
+        name: serviceName
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      operationId: get-service-endpoint-serviceName
+    post:
+      summary: ''
+      operationId: post-service-endpoint-serviceName
+      responses:
+        '200':
+          description: OK
+      description: "Salva l'endpoint, con expire"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceEndpoint'
+  /service/endpoint/all:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      operationId: get-service-endpoint-all
+      description: ''
 components:
-  schemas: {}
+  schemas:
+    ServiceConfig:
+      title: ServiceConfig
+      type: object
+      properties:
+        id:
+          type: string
+    ServiceInfo:
+      title: ServiceInfo
+      type: object
+      properties:
+        id:
+          type: string
+    AppConfig:
+      $ref: '#/components/schemas/AppConfig'
+    ServiceEndpoint:
+      title: ServiceEndpoint
+      type: object
+      properties:
+        id:
+          type: string
+    EntrypointMap:
+      title: EntrypointMap
+      type: object
+      properties:
+        id:
+          type: string
+      additionalProperties:
+        type: array
+        items:
+          type: string
