@@ -1,0 +1,14 @@
+openapi: 3.0.0
+info:
+  title: ms-config-registry
+  version: '1.0'
+  contact:
+    name: paolo
+    email: paolo.andrenacci@gmail.com
+  description: Registro di configurazione per ecosistema di microservizi ad alta resilienza
+servers:
+  - url: 'http://localhost:3000'
+    description: localhost
+paths: {}
+components:
+  schemas: {}
